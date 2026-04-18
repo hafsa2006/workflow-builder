@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+
+/* Claude-inspired palette — see DESIGN.md */
+@theme {
+  --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-sans:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+}
+
+:root {
+  --ds-near-black: #141413;
+  --ds-terracotta: #c96442;
+  --ds-coral: #d97757;
+  --ds-error: #b53333;
+  --ds-focus: #3898ec;
+  --ds-parchment: #f5f4ed;
+  --ds-ivory: #faf9f5;
+  --ds-white: #ffffff;
+  --ds-warm-sand: #e8e6dc;
+  --ds-dark-surface: #30302e;
+  --ds-charcoal: #4d4c48;
+  --ds-olive: #5e5d59;
+  --ds-stone: #87867f;
+  --ds-dark-warm: #3d3d3a;
+  --ds-warm-silver: #b0aea5;
+  --ds-border-cream: #f0eee6;
+  --ds-border-warm: #e8e6dc;
+  --ds-ring-warm: #d1cfc5;
+  --ds-muted-green: #6b7268;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-feature-settings:
+    'liga' 1,
+    'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.theme-light {
+  --color-brand: var(--ds-terracotta);
+  --color-focus: var(--ds-focus);
+  --text-on-brand: var(--ds-ivory);
+
+  --app-bg: var(--ds-parchment);
+  --app-surface: var(--ds-ivory);
+  --app-card: var(--ds-ivory);
+  --app-text: var(--ds-near-black);
+  --app-muted: var(--ds-olive);
+  --app-border: var(--ds-border-cream);
+
+  --glass-bg: color-mix(in oklab, var(--ds-ivory) 88%, transparent);
+  --glass-border: var(--ds-border-warm);
+  --glass-shadow: rgba(0, 0, 0, 0.05) 0px 4px 24px;
+
+  --node-surface: color-mix(in oklab, var(--ds-warm-sand) 38%, var(--ds-ivory));
+  --node-shadow: #e8e6dc 0px 0px 0px 0px, var(--ds-ring-warm) 0px 0px 0px 1px;
+
+  --json-panel-bg: var(--ds-ivory);
+  --json-panel-inset: rgba(255, 255, 255, 0.55);
+
+  --json-key: var(--ds-focus);
+  --json-string: var(--ds-terracotta);
+  --json-number: var(--ds-coral);
+  --json-bool: var(--ds-error);
+  --json-null: color-mix(in oklab, var(--ds-stone) 75%, var(--ds-olive));
+  --json-punct: var(--ds-stone);
+
+  --chat-system-bg: color-mix(in oklab, var(--ds-warm-sand) 42%, var(--ds-ivory));
+  --chat-system-shadow: rgba(0, 0, 0, 0.05) 0px 4px 24px;
+
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.theme-dark {
+  --color-brand: var(--ds-terracotta);
+  --color-focus: var(--ds-focus);
+  --text-on-brand: var(--ds-ivory);
+
+  --app-bg: var(--ds-near-black);
+  --app-surface: var(--ds-dark-surface);
+  --app-card: var(--ds-dark-surface);
+  --app-text: var(--ds-ivory);
+  --app-muted: var(--ds-warm-silver);
+  --app-border: var(--ds-dark-surface);
+
+  --glass-bg: color-mix(in oklab, var(--ds-dark-surface) 78%, rgba(255, 255, 255, 0.05));
+  --glass-border: color-mix(in oklab, var(--ds-dark-surface) 90%, white);
+  --glass-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  --node-surface: color-mix(in oklab, var(--ds-dark-surface) 90%, var(--ds-terracotta));
+  --node-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ds-warm-silver) 22%, black),
+    0 10px 30px rgba(0, 0, 0, 0.35);
+
+  --json-panel-bg: #1a1917;
+  --json-panel-inset: rgba(255, 255, 255, 0.04);
+
+  --json-key: color-mix(in oklab, var(--ds-focus) 88%, white);
+  --json-string: color-mix(in oklab, var(--ds-coral) 82%, white);
+  --json-number: color-mix(in oklab, var(--ds-coral) 72%, white);
+  --json-bool: color-mix(in oklab, var(--ds-error) 78%, white);
+  --json-null: color-mix(in oklab, var(--ds-warm-silver) 75%, var(--ds-near-black));
+  --json-punct: color-mix(in oklab, var(--ds-warm-silver) 82%, var(--ds-stone));
+
+  --chat-system-bg: var(--ds-dark-surface);
+  --chat-system-shadow: var(--glass-shadow);
+
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.theme-light,
+.theme-dark {
+  color: var(--app-text);
+  background: var(--app-bg);
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
+}
+
+/* Subtle canvas grid — warm neutrals */
+.dot-grid {
+  background-color: var(--app-bg);
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--ds-olive) 16%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+.theme-dark .dot-grid {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--ds-warm-silver) 10%, transparent) 1px,
+    transparent 1px
+  );
+}
+
+/* Shared interaction timing */
+:where(.theme-light, .theme-dark) button,
+:where(.theme-light, .theme-dark) [role='button'] {
+  transition:
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    transform 200ms var(--ease-out),
+    opacity 200ms var(--ease-out);
+}
