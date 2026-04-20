@@ -8,8 +8,9 @@ async function generateWorkflow(prompt) {
     throw new Error("GEMINI_API_KEY is not defined in .env");
   }
 
-  // Switched to gemini-flash-latest because gemini-1.5-flash returned 404
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
+  // Switched to gemini-flash-latest as confirmed working via curl
+  console.log("Using Gemini API Key (last 4):", apiKey.slice(-4));
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`;
 
   const requestBody = {
     contents: [{
@@ -266,17 +267,10 @@ User Request: "${prompt}"`
     return text;
   }
 
-  try {
-    return await executeRequest(url, { 'Content-Type': 'application/json' });
-  } catch (error) {
-    console.warn("Primary API failed. Attempting fallback API as requested...");
-    const fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
-    const fallbackHeaders = {
-      'Content-Type': 'application/json',
-      'X-goog-api-key': 'AIzaSyAA5hcPDqOGgpIesLk9atAndLPDq5NMLLA'
-    };
-    return await executeRequest(fallbackUrl, fallbackHeaders);
-  }
+  return await executeRequest(url, { 
+    'Content-Type': 'application/json',
+    'X-goog-api-key': apiKey
+  });
 }
 
 module.exports = {
