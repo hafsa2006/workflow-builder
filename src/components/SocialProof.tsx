@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+
 
 const logos = ["Vercel", "OpenAI", "Stripe", "Linear", "Supabase"];
 

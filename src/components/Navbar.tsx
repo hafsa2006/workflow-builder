@@ -2,12 +2,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Terminal, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { ThemeToggle } from './ThemeToggle';
-import { useTheme } from '../context/ThemeContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme } = useTheme();
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-[var(--app-border)] bg-[var(--app-bg)]/80 backdrop-blur-xl transition-colors duration-300">

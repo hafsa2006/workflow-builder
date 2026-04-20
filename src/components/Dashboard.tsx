@@ -1,12 +1,10 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ChatPanel } from './ChatPanel'
 import { ResizableLayout } from './ResizableLayout'
 import { ThemeToggle } from './ThemeToggle'
 import type { ChatMessage } from '../types/workflow'
 import { JSONViewer } from './JSONViewer'
 import { generateWorkflowBackend } from '../utils/api'
-import { useTheme } from '../context/ThemeContext'
-import { motion, AnimatePresence } from 'framer-motion'
 
 let idSeq = 1
 function nextId(prefix: string) {
@@ -14,8 +12,6 @@ function nextId(prefix: string) {
 }
 
 export function Dashboard() {
-  const { theme } = useTheme();
-  const [userPrompt, setUserPrompt] = useState('')
   const [chatInput, setChatInput] = useState('')
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
     {
@@ -25,24 +21,15 @@ export function Dashboard() {
     },
   ])
   const [workflowJSON, setWorkflowJSON] = useState<object | null>(null)
-  const [workflowBlueprint, setWorkflowBlueprint] = useState<any[] | null>(null)
-  const [clarification, setClarification] = useState<string[]>([])
   const [isTyping, setIsTyping] = useState(false)
-  const [displayedText, setDisplayedText] = useState('')
-  const [fullResponse, setFullResponse] = useState('')
 
   async function simulateTyping(messageId: string, fullText: string) {
-    setFullResponse(fullText)
-
     setChatHistory((h) => h.map((m) => (m.id === messageId ? { ...m, text: '' } : m)))
 
     let currentText = ''
     for (let i = 0; i < fullText.length; i++) {
       currentText += fullText[i]
-      setDisplayedText(currentText)
-
       setChatHistory((h) => h.map((m) => (m.id === messageId ? { ...m, text: currentText } : m)))
-
       await new Promise((resolve) => setTimeout(resolve, 25))
     }
   }
@@ -55,7 +42,6 @@ export function Dashboard() {
 
     setIsTyping(true)
     setChatInput('')
-    setUserPrompt(text)
 
     const userMsg: ChatMessage = { id: nextId('u'), role: 'user', text }
     setChatHistory((h) => [...h, userMsg])
@@ -71,8 +57,6 @@ export function Dashboard() {
     try {
       const result = await generateWorkflowBackend(text)
       setWorkflowJSON(result.json || result.executableJSON)
-      setWorkflowBlueprint(result.blueprint || null)
-      setClarification(result.clarification || [])
 
       let fullResponseText = ''
       if (result.message) {
