@@ -66,6 +66,14 @@ export function ChatPanel({ messages, value, onChange, onSend, disabled }: Props
             rows={2}
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                if (!disabled && value.trim()) {
+                  onSend()
+                }
+              }
+            }}
             placeholder="Describe your workflow..."
             disabled={disabled}
             className="min-h-[48px] w-full resize-none bg-transparent py-2 text-[15px] leading-relaxed text-[var(--app-text)] outline-none placeholder:text-[color-mix(in_oklab,var(--app-muted)_78%,transparent)]"
