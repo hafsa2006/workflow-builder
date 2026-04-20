@@ -1,18 +1,11 @@
-import type { ThemeMode } from '../types/workflow'
-
-type Props = {
-  locked: ThemeMode
-  preview: ThemeMode | null
-  onPreview: (mode: ThemeMode | null) => void
-  onLock: (mode: ThemeMode) => void
-}
+import { useTheme } from '../context/ThemeContext'
 
 function IconSun({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="18"
-      height="18"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden
@@ -32,8 +25,8 @@ function IconMoon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
-      width="18"
-      height="18"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden
@@ -48,54 +41,40 @@ function IconMoon({ className }: { className?: string }) {
   )
 }
 
-export function ThemeToggle({ locked, preview, onPreview, onLock }: Props) {
-  const active = preview ?? locked
+export function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div
-      className="inline-flex items-center gap-1 rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] p-1 shadow-[0_1px_2px_rgba(15,17,21,0.06)] transition-[box-shadow,background-color,border-color] duration-200 ease-out"
+      className="inline-flex items-center gap-1 rounded-full border border-[var(--app-border)] bg-[var(--app-surface)]/50 backdrop-blur-sm p-1 shadow-sm transition-all duration-300"
       role="group"
       aria-label="Theme"
     >
       <button
         type="button"
-        title="Light theme — hover to preview, click to save"
-        onMouseEnter={() => onPreview('light')}
-        onMouseLeave={() => onPreview(null)}
-        onClick={() => {
-          onLock('light')
-          onPreview(null)
-        }}
-        className={[
-          'flex h-10 w-10 items-center justify-center rounded-full transition-[background-color,box-shadow,color,transform] duration-200 ease-out active:scale-[0.98]',
-          active === 'light'
-            ? 'bg-[color-mix(in_oklab,var(--ds-warm-sand)_48%,var(--app-surface))] text-[var(--app-text)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--ds-ring-warm)_70%,transparent)]'
-            : 'text-[var(--app-muted)] hover:bg-[color-mix(in_oklab,var(--ds-warm-sand)_26%,transparent)] hover:text-[var(--app-text)]',
-        ].join(' ')}
-        aria-pressed={locked === 'light'}
+        title="Switch to Light mode"
+        onClick={() => theme === 'dark' && toggleTheme()}
+        className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ${
+          theme === 'light'
+            ? 'bg-terracotta text-ivory shadow-lg shadow-terracotta/20'
+            : 'text-[var(--app-muted)] hover:text-[var(--app-text)] hover:bg-[var(--app-border)]'
+        }`}
+        aria-pressed={theme === 'light'}
       >
         <IconSun />
-        <span className="sr-only">Light</span>
       </button>
       <button
         type="button"
-        title="Dark theme — hover to preview, click to save"
-        onMouseEnter={() => onPreview('dark')}
-        onMouseLeave={() => onPreview(null)}
-        onClick={() => {
-          onLock('dark')
-          onPreview(null)
-        }}
-        className={[
-          'flex h-10 w-10 items-center justify-center rounded-full transition-[background-color,box-shadow,color,transform] duration-200 ease-out active:scale-[0.98]',
-          active === 'dark'
-            ? 'bg-[color-mix(in_oklab,var(--ds-stone)_28%,var(--app-surface))] text-[var(--app-text)] shadow-[0_0_22px_rgba(0,0,0,0.2),inset_0_0_0_1px_color-mix(in_oklab,var(--ds-warm-silver)_38%,transparent)]'
-            : 'text-[var(--app-muted)] hover:bg-[color-mix(in_oklab,var(--ds-stone)_18%,transparent)] hover:text-[var(--app-text)]',
-        ].join(' ')}
-        aria-pressed={locked === 'dark'}
+        title="Switch to Dark mode"
+        onClick={() => theme === 'light' && toggleTheme()}
+        className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300 ${
+          theme === 'dark'
+            ? 'bg-terracotta text-ivory shadow-lg shadow-terracotta/20'
+            : 'text-[var(--app-muted)] hover:text-[var(--app-text)] hover:bg-[var(--app-border)]'
+        }`}
+        aria-pressed={theme === 'dark'}
       >
         <IconMoon />
-        <span className="sr-only">Dark</span>
       </button>
     </div>
   )

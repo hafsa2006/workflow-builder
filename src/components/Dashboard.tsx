@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { ChatPanel } from './ChatPanel'
 import { ResizableLayout } from './ResizableLayout'
 import { ThemeToggle } from './ThemeToggle'
-import type { ChatMessage, ThemeMode } from '../types/workflow'
+import type { ChatMessage } from '../types/workflow'
 import { JSONViewer } from './JSONViewer'
 import { generateWorkflowBackend } from '../utils/api'
+import { useTheme } from '../context/ThemeContext'
+import { motion, AnimatePresence } from 'framer-motion'
 
 let idSeq = 1
 function nextId(prefix: string) {
@@ -12,6 +14,7 @@ function nextId(prefix: string) {
 }
 
 export function Dashboard() {
+  const { theme } = useTheme();
   const [userPrompt, setUserPrompt] = useState('')
   const [chatInput, setChatInput] = useState('')
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
@@ -27,11 +30,6 @@ export function Dashboard() {
   const [isTyping, setIsTyping] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
   const [fullResponse, setFullResponse] = useState('')
-
-  const [lockedTheme, setLockedTheme] = useState<ThemeMode>('light')
-  const [previewTheme, setPreviewTheme] = useState<ThemeMode | null>(null)
-
-  const effectiveTheme = previewTheme ?? lockedTheme
 
   async function simulateTyping(messageId: string, fullText: string) {
     setFullResponse(fullText)
@@ -98,47 +96,61 @@ export function Dashboard() {
   }
 
   return (
-    <div
-      className={[
-        effectiveTheme === 'dark' ? 'theme-dark' : 'theme-light',
-        'flex h-full min-h-0 flex-col',
-      ].join(' ')}
-    >
-      <header className="flex items-center justify-between gap-4 border-b border-[var(--app-border)] bg-[var(--app-bg)] px-6 py-4 transition-[background-color,border-color] duration-200 ease-out">
-        <div className="min-w-0">
-          <div className="font-serif text-[1.625rem] font-medium leading-[1.2] tracking-tight text-[var(--app-text)]">
-            AI Workflow Builder
+    <div className={`flex h-full min-h-0 flex-col bg-[var(--app-bg)] mesh-gradient selection:bg-terracotta/30 selection:text-ivory`}>
+      <header className="flex items-center justify-between gap-4 border-b border-[var(--app-border)] bg-[var(--app-bg)]/80 backdrop-blur-md px-8 py-5 sticky top-0 z-50 transition-all duration-300">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-terracotta rounded-xl flex items-center justify-center text-ivory font-serif text-xl font-bold glow-terracotta">
+            A
           </div>
-          <div className="mt-1 truncate text-[14px] leading-relaxed text-[var(--app-muted)]">
-            Chat-driven planning · Executable JSON
+          <div className="min-w-0">
+            <h1 className="font-serif text-2xl font-semibold tracking-tight text-[var(--app-text)] leading-tight">
+              AI Workflow Builder
+            </h1>
+            <p className="text-xs font-medium tracking-wide text-[var(--app-muted)] uppercase opacity-80">
+              Chat-driven planning · Executable JSON
+            </p>
           </div>
         </div>
-        <ThemeToggle
-          locked={lockedTheme}
-          preview={previewTheme}
-          onPreview={setPreviewTheme}
-          onLock={setLockedTheme}
-        />
+        <div className="flex items-center gap-6">
+          <ThemeToggle />
+          <a 
+            href="/" 
+            className="text-sm font-medium text-[var(--app-muted)] hover:text-terracotta transition-colors"
+          >
+            Exit to Home
+          </a>
+        </div>
       </header>
 
-      <ResizableLayout
-        defaultLeftPercent={30}
-        minLeftPercent={22}
-        minRightPercent={34}
-        left={
-          <ChatPanel
-            messages={chatHistory}
-            value={chatInput}
-            onChange={setChatInput}
-            onSend={send}
-          />
-        }
-        right={
-          <div className="h-full bg-[var(--app-bg)] transition-colors duration-300 p-6">
-            <JSONViewer data={workflowJSON} />
-          </div>
-        }
-      />
+      <main className="flex-1 min-h-0 overflow-hidden">
+        <ResizableLayout
+          defaultLeftPercent={35}
+          minLeftPercent={25}
+          minRightPercent={40}
+          left={
+            <div className="h-full border-r border-[var(--app-border)] bg-[var(--app-bg)]/40 backdrop-blur-sm">
+              <ChatPanel
+                messages={chatHistory}
+                value={chatInput}
+                onChange={setChatInput}
+                onSend={send}
+              />
+            </div>
+          }
+          right={
+            <div className="h-full bg-[var(--app-bg)]/20 p-8 flex flex-col gap-6">
+              <div className="flex items-center justify-between">
+                <h2 className="font-serif text-xl font-medium text-[var(--app-text)]">
+                  Workflow Output
+                </h2>
+              </div>
+              <div className="flex-1 min-h-0 bg-[var(--json-panel-bg)] rounded-3xl border border-[var(--app-border)] shadow-2xl overflow-hidden glass-shadow">
+                <JSONViewer data={workflowJSON} />
+              </div>
+            </div>
+          }
+        />
+      </main>
     </div>
   )
 }

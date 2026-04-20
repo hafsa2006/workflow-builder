@@ -22,32 +22,28 @@ export function ChatPanel({ messages, value, onChange, onSend, disabled }: Props
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col border-r border-[var(--app-border)] bg-[var(--app-bg)] transition-[background-color,border-color] duration-200 ease-out">
-      <div className="border-b border-[var(--app-border)] px-4 py-4">
-        <div className="font-serif text-lg font-medium leading-snug tracking-tight text-[var(--app-text)]">
-          Workflow chat
-        </div>
-        <div className="mt-1 text-[13px] leading-relaxed text-[var(--app-muted)]">
+    <div className="flex h-full min-h-0 flex-col bg-transparent">
+      <div className="px-6 py-6 border-b border-[var(--app-border)]/50">
+        <h3 className="font-serif text-xl font-medium text-[var(--app-text)]">
+          Workflow Chat
+        </h3>
+        <p className="mt-1 text-sm text-[var(--app-muted)]">
           Natural language in, a structured workflow out.
-        </div>
+        </p>
       </div>
 
-      <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
+      <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6 scrollbar-thin">
         {messages.map((m) => (
           <div
             key={m.id}
-            className={[
-              'flex w-full',
-              m.role === 'user' ? 'justify-end' : 'justify-start',
-            ].join(' ')}
+            className={`flex w-full ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={[
-                'max-w-[min(92%,420px)] rounded-[16px] px-4 py-3 text-[15px] leading-relaxed transition-[transform,box-shadow,background-color] duration-200 ease-out',
+              className={`max-w-[85%] rounded-2xl px-5 py-3.5 text-sm leading-relaxed transition-all duration-300 ${
                 m.role === 'user'
-                  ? 'rounded-br-[8px] bg-[var(--color-brand)] text-[var(--text-on-brand)] shadow-[0_10px_26px_rgba(201,100,66,0.28)] hover:-translate-y-px hover:shadow-[0_14px_34px_rgba(201,100,66,0.35)]'
-                  : 'rounded-bl-[8px] border border-[var(--app-border)] bg-[var(--chat-system-bg)] text-[var(--app-text)] shadow-[var(--chat-system-shadow)] hover:-translate-y-px hover:shadow-[0_8px_28px_rgba(0,0,0,0.06)]',
-              ].join(' ')}
+                  ? 'rounded-tr-none bg-terracotta text-ivory shadow-lg shadow-terracotta/20'
+                  : 'rounded-tl-none bg-[var(--app-surface)]/60 backdrop-blur-sm border border-[var(--app-border)] text-[var(--app-text)] glass-shadow'
+              }`}
             >
               {m.text}
             </div>
@@ -56,13 +52,9 @@ export function ChatPanel({ messages, value, onChange, onSend, disabled }: Props
         <div ref={endRef} />
       </div>
 
-      <form onSubmit={submit} className="border-t border-[var(--app-border)] p-4">
-        <div className="flex items-end gap-2 rounded-[12px] border border-[var(--app-border)] bg-[var(--app-surface)] px-2 py-2 pl-4 shadow-[#e8e6dc_0px_0px_0px_0px,var(--ds-ring-warm)_0px_0px_0px_1px] transition-[box-shadow,border-color] duration-200 ease-out focus-within:border-[color-mix(in_oklab,var(--color-focus)_45%,var(--app-border))] focus-within:shadow-[0_0_0_3px_color-mix(in_oklab,var(--color-focus)_22%,transparent)]">
-          <label className="sr-only" htmlFor="wf-chat-input">
-            Describe your workflow
-          </label>
+      <form onSubmit={submit} className="p-6 border-t border-[var(--app-border)]/50">
+        <div className="relative group">
           <textarea
-            id="wf-chat-input"
             rows={2}
             value={value}
             onChange={(e) => onChange(e.target.value)}
@@ -76,14 +68,17 @@ export function ChatPanel({ messages, value, onChange, onSend, disabled }: Props
             }}
             placeholder="Describe your workflow..."
             disabled={disabled}
-            className="min-h-[48px] w-full resize-none bg-transparent py-2 text-[15px] leading-relaxed text-[var(--app-text)] outline-none placeholder:text-[color-mix(in_oklab,var(--app-muted)_78%,transparent)]"
+            className="w-full resize-none rounded-2xl border border-[var(--app-border)] bg-[var(--app-surface)]/50 backdrop-blur-sm p-4 pr-16 text-sm text-[var(--app-text)] placeholder:text-[var(--app-muted)]/50 outline-none focus:border-terracotta/50 focus:ring-4 focus:ring-terracotta/5 transition-all duration-300"
           />
           <button
             type="submit"
             disabled={disabled || !value.trim()}
-            className="mb-0.5 inline-flex h-11 shrink-0 items-center justify-center rounded-[12px] bg-[var(--color-brand)] px-5 text-[14px] font-medium text-[var(--text-on-brand)] shadow-[var(--color-brand)_0px_0px_0px_0px,var(--color-brand)_0px_0px_0px_1px] transition-[transform,background-color,box-shadow,opacity] duration-200 ease-out hover:bg-[color-mix(in_oklab,var(--color-brand)_92%,var(--ds-near-black))] hover:shadow-[0_10px_22px_rgba(201,100,66,0.35)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
+            className="absolute right-3 bottom-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-terracotta text-ivory shadow-lg shadow-terracotta/20 transition-all hover:bg-coral active:scale-95 disabled:opacity-40 disabled:shadow-none"
           >
-            Send
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
       </form>

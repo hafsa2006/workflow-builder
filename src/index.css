@@ -104,7 +104,43 @@ body {
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.theme-dark {
+.theme-light {
+  --color-brand: var(--ds-terracotta);
+  --color-focus: var(--ds-focus);
+  --text-on-brand: var(--ds-ivory);
+
+  --app-bg: var(--ds-ivory);
+  --app-surface: var(--ds-white);
+  --app-card: var(--ds-warm-sand);
+  --app-text: var(--ds-near-black);
+  --app-muted: var(--ds-olive);
+  --app-border: var(--ds-border-cream);
+
+  --glass-bg: rgba(250, 249, 245, 0.8);
+  --glass-border: rgba(201, 100, 66, 0.1);
+  --glass-shadow:
+    0 18px 50px rgba(20, 20, 19, 0.05),
+    0 0 0 1px rgba(201, 100, 66, 0.05);
+
+  --node-surface: var(--ds-white);
+  --node-shadow:
+    0 0 0 1px rgba(201, 100, 66, 0.08),
+    0 10px 30px rgba(20, 20, 19, 0.05);
+
+  --json-panel-bg: var(--ds-parchment);
+  --json-panel-inset: rgba(20, 20, 19, 0.03);
+
+  --json-key: #0284c7;
+  --json-string: #9a3412;
+  --json-number: #b91c1c;
+  --json-bool: #7e22ce;
+  --json-null: #475569;
+  --json-punct: #64748b;
+
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.theme-dark, .theme-light {
   color: var(--app-text);
   background: var(--app-bg);
 }

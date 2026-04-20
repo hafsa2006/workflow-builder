@@ -31,27 +31,34 @@ export function JSONViewer({ data }: Props) {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={copy}
-          disabled={!data}
-          className="rounded-[12px] border border-[var(--app-border)] bg-[color-mix(in_oklab,var(--ds-warm-sand)_34%,var(--app-surface))] px-4 py-2 text-[13px] font-medium text-[var(--app-text)] shadow-[var(--ds-border-warm)_0px_0px_0px_0px,var(--ds-ring-warm)_0px_0px_0px_1px] transition-[transform,background-color,border-color,box-shadow,opacity] duration-200 ease-out hover:bg-[color-mix(in_oklab,var(--ds-warm-sand)_22%,var(--app-surface))] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {copied ? 'Copied' : 'Copy'}
-        </button>
-        <button
-          type="button"
-          onClick={download}
-          disabled={!data}
-          className="rounded-[12px] bg-[var(--color-brand)] px-4 py-2 text-[13px] font-medium text-[var(--text-on-brand)] shadow-[var(--color-brand)_0px_0px_0px_0px,var(--color-brand)_0px_0px_0px_1px] transition-[transform,background-color,box-shadow,opacity] duration-200 ease-out hover:bg-[color-mix(in_oklab,var(--color-brand)_92%,var(--ds-near-black))] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
-        >
-          Download JSON
-        </button>
+    <div className="flex flex-col h-full bg-transparent">
+      <div className="flex items-center justify-between px-6 py-4 bg-[var(--app-bg)]/30 backdrop-blur-sm border-b border-[var(--app-border)]/50">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-terracotta/60" />
+          <span className="text-xs font-mono text-[var(--app-muted)] uppercase tracking-widest">
+            {data ? 'generated-workflow.json' : 'waiting-for-input'}
+          </span>
+        </div>
+        
+        {data && (
+          <div className="flex gap-2">
+            <button
+              onClick={copy}
+              className="px-3 py-1.5 rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)]/50 text-[11px] font-bold uppercase tracking-wider text-[var(--app-text)] hover:border-terracotta transition-all cursor-pointer"
+            >
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+            <button
+              onClick={download}
+              className="px-3 py-1.5 rounded-lg bg-terracotta text-ivory text-[11px] font-bold uppercase tracking-wider hover:bg-coral transition-all cursor-pointer shadow-lg shadow-terracotta/20"
+            >
+              Download
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-[var(--app-border)] bg-[var(--json-panel-bg)] p-5 shadow-[inset_0_1px_0_var(--json-panel-inset)] transition-[background-color,border-color] duration-200 ease-out">
+      <div className="flex-1 overflow-auto p-6 font-mono text-sm scrollbar-thin">
         <HighlightedJson json={text} />
       </div>
     </div>
