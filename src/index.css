@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600&family=JetBrains+Mono&display=swap');
 @import 'tailwindcss';
 
-
-/* Claude-inspired palette — see DESIGN.md */
 @theme {
   --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-sans:
@@ -15,6 +13,21 @@
     'Helvetica Neue',
     Arial,
     sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-near-black: #141413;
+  --color-terracotta: #c96442;
+  --color-coral: #d97757;
+  --color-ivory: #faf9f5;
+  --color-warm-sand: #e8e6dc;
+  --color-dark-surface: #30302e;
+  --color-charcoal: #4d4c48;
+  --color-olive: #5e5d59;
+  --color-stone: #87867f;
+  --color-dark-warm: #3d3d3a;
+  --color-warm-silver: #b0aea5;
+  --color-border-cream: #f0eee6;
+  --color-border-warm: #e8e6dc;
 }
 
 :root {
@@ -55,41 +68,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.theme-light {
-  --color-brand: var(--ds-terracotta);
-  --color-focus: var(--ds-focus);
-  --text-on-brand: var(--ds-ivory);
-
-  --app-bg: var(--ds-parchment);
-  --app-surface: var(--ds-ivory);
-  --app-card: var(--ds-ivory);
-  --app-text: var(--ds-near-black);
-  --app-muted: var(--ds-olive);
-  --app-border: var(--ds-border-cream);
-
-  --glass-bg: color-mix(in oklab, var(--ds-ivory) 88%, transparent);
-  --glass-border: var(--ds-border-warm);
-  --glass-shadow: rgba(0, 0, 0, 0.05) 0px 4px 24px;
-
-  --node-surface: color-mix(in oklab, var(--ds-warm-sand) 38%, var(--ds-ivory));
-  --node-shadow: #e8e6dc 0px 0px 0px 0px, var(--ds-ring-warm) 0px 0px 0px 1px;
-
-  --json-panel-bg: var(--ds-ivory);
-  --json-panel-inset: rgba(255, 255, 255, 0.55);
-
-  --json-key: var(--ds-focus);
-  --json-string: var(--ds-terracotta);
-  --json-number: var(--ds-coral);
-  --json-bool: var(--ds-error);
-  --json-null: color-mix(in oklab, var(--ds-stone) 75%, var(--ds-olive));
-  --json-punct: var(--ds-stone);
-
-  --chat-system-bg: color-mix(in oklab, var(--ds-warm-sand) 42%, var(--ds-ivory));
-  --chat-system-shadow: rgba(0, 0, 0, 0.05) 0px 4px 24px;
-
-  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
-}
-
 .theme-dark {
   --color-brand: var(--ds-terracotta);
   --color-focus: var(--ds-focus);
@@ -102,69 +80,77 @@ body {
   --app-muted: var(--ds-warm-silver);
   --app-border: var(--ds-dark-surface);
 
-  --glass-bg: color-mix(in oklab, var(--ds-dark-surface) 78%, rgba(255, 255, 255, 0.05));
-  --glass-border: color-mix(in oklab, var(--ds-dark-surface) 90%, white);
+  --glass-bg: rgba(48, 48, 46, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow:
     0 18px 50px rgba(0, 0, 0, 0.45),
     0 0 0 1px rgba(255, 255, 255, 0.06);
 
-  --node-surface: color-mix(in oklab, var(--ds-dark-surface) 90%, var(--ds-terracotta));
+  --node-surface: #1e1e1d;
   --node-shadow:
-    0 0 0 1px color-mix(in oklab, var(--ds-warm-silver) 22%, black),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
     0 10px 30px rgba(0, 0, 0, 0.35);
 
   --json-panel-bg: #1a1917;
   --json-panel-inset: rgba(255, 255, 255, 0.04);
 
-  --json-key: color-mix(in oklab, var(--ds-focus) 88%, white);
-  --json-string: color-mix(in oklab, var(--ds-coral) 82%, white);
-  --json-number: color-mix(in oklab, var(--ds-coral) 72%, white);
-  --json-bool: color-mix(in oklab, var(--ds-error) 78%, white);
-  --json-null: color-mix(in oklab, var(--ds-warm-silver) 75%, var(--ds-near-black));
-  --json-punct: color-mix(in oklab, var(--ds-warm-silver) 82%, var(--ds-stone));
-
-  --chat-system-bg: var(--ds-dark-surface);
-  --chat-system-shadow: var(--glass-shadow);
+  --json-key: #7dd3fc;
+  --json-string: #fdba74;
+  --json-number: #fca5a5;
+  --json-bool: #c084fc;
+  --json-null: #94a3b8;
+  --json-punct: #64748b;
 
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.theme-light,
 .theme-dark {
   color: var(--app-text);
   background: var(--app-bg);
-  transition:
-    background-color 200ms var(--ease-out),
-    color 200ms var(--ease-out);
 }
 
-/* Subtle canvas grid — warm neutrals */
-.dot-grid {
-  background-color: var(--app-bg);
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklab, var(--ds-olive) 16%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 20px 20px;
+@layer utilities {
+  .glow-terracotta {
+    box-shadow: 0 0 30px 2px rgba(201, 100, 66, 0.15);
+  }
+  
+  .glow-text-terracotta {
+    text-shadow: 0 0 15px rgba(201, 100, 66, 0.4);
+  }
+
+  .mesh-gradient {
+    background-image: radial-gradient(at 0% 0%, hsla(15, 60%, 40%, 0.1) 0, transparent 50%),
+                      radial-gradient(at 100% 0%, hsla(20, 60%, 30%, 0.1) 0, transparent 50%),
+                      radial-gradient(at 100% 100%, hsla(15, 60%, 40%, 0.05) 0, transparent 50%),
+                      radial-gradient(at 0% 100%, hsla(20, 60%, 30%, 0.1) 0, transparent 50%);
+  }
 }
 
-.theme-dark .dot-grid {
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklab, var(--ds-warm-silver) 10%, transparent) 1px,
-    transparent 1px
-  );
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Shared interaction timing */
-:where(.theme-light, .theme-dark) button,
-:where(.theme-light, .theme-dark) [role='button'] {
-  transition:
-    background-color 200ms var(--ease-out),
-    color 200ms var(--ease-out),
-    border-color 200ms var(--ease-out),
-    box-shadow 200ms var(--ease-out),
-    transform 200ms var(--ease-out),
-    opacity 200ms var(--ease-out);
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
 }
+
+/* Base scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ds-near-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ds-dark-surface);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ds-charcoal);
+}
+
