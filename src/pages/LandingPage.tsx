@@ -7,6 +7,7 @@ import SolutionSection from '../components/SolutionSection';
 import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
 import WorkflowDemo from '../components/WorkflowDemo';
+
 import ExampleSection from '../components/ExampleSection';
 import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
@@ -23,6 +24,7 @@ export function LandingPage() {
         <HowItWorks />
         <Features />
         <WorkflowDemo />
+
         <ExampleSection />
         <CTASection />
       </main>

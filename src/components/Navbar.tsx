@@ -23,9 +23,9 @@ export default function Navbar() {
           <a href="#features" className="text-sm font-medium text-[var(--app-muted)] transition-colors hover:text-terracotta">Features</a>
           <a href="#how-it-works" className="text-sm font-medium text-[var(--app-muted)] transition-colors hover:text-terracotta">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-[var(--app-muted)] transition-colors hover:text-terracotta">Demo</a>
-          
+
           <div className="h-6 w-[1px] bg-[var(--app-border)] mx-2" />
-          
+
           <Link to="/app">
             <motion.button
               whileHover={{ scale: 1.05 }}

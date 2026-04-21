@@ -46,13 +46,7 @@ export default function Hero() {
                   Generate Workflow <ArrowRight className="h-4 w-4" />
                 </motion.button>
               </Link>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-base font-semibold text-ivory backdrop-blur-md transition-colors hover:bg-white/10"
-              >
-                <Play className="h-4 w-4 text-terracotta" /> View Demo
-              </motion.button>
+
             </div>
 
             {/* Feature Cards */}
