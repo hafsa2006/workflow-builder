@@ -37,7 +37,7 @@ function sanitizeN8nJson(json) {
   return json;
 }
 
-function parseGeminiResponse(rawText) {
+function parseAIResponse(rawText) {
   try {
     const cleaned = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
     const parsed = JSON.parse(cleaned);
@@ -58,5 +58,5 @@ function parseGeminiResponse(rawText) {
 }
 
 module.exports = {
-  parseGeminiResponse
+  parseAIResponse
 };
