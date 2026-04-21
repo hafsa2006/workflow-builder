@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function CTASection() {
@@ -55,13 +55,7 @@ export default function CTASection() {
                 Generate Workflow <ArrowRight className="h-5 w-5" />
               </motion.button>
             </Link>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl text-ivory font-bold text-lg hover:bg-white/10 transition-all flex items-center gap-3"
-            >
-              <BookOpen className="h-5 w-5 text-stone" /> Read Docs
-            </motion.button>
+
           </div>
         </motion.div>
       </div>
