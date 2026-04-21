@@ -1,5 +1,5 @@
 export async function generateWorkflowBackend(prompt: string) {
-  const res = await fetch('https://workflow-builder-omega-sage.vercel.app/generate', {
+  const res = await fetch('http://localhost:3000/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt })
