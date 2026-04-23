@@ -5,7 +5,6 @@ import { ThemeToggle } from './ThemeToggle'
 import type { ChatMessage } from '../types/workflow'
 import { JSONViewer } from './JSONViewer'
 import { Terminal, Copy, Download, Check } from 'lucide-react'
-import { generateWorkflowBackend } from '../utils/api'
 import { NIAT_FALLBACK_JSON } from '../utils/fallbackData'
 
 let idSeq = 1
