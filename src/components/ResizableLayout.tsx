@@ -53,7 +53,7 @@ export function ResizableLayout({
   return (
     <div ref={containerRef} className="flex min-h-0 min-w-0 flex-1">
       <div
-        className="min-h-0 min-w-0 overflow-hidden"
+        className="min-h-0 min-w-0 overflow-hidden h-full"
         style={{ flex: `0 0 ${leftPct}%` }}
       >
         {left}
@@ -70,7 +70,7 @@ export function ResizableLayout({
           document.body.style.userSelect = 'none'
         }}
       >
-        <span className="pointer-events-none absolute inset-y-2 left-1/2 w-px -translate-x-1/2 rounded-full bg-[color-mix(in_oklab,var(--ds-olive)_45%,var(--app-border))] opacity-70 transition-opacity duration-200 group-hover:opacity-100" />
+        <span className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[var(--app-border)] opacity-50 transition-opacity duration-200 group-hover:opacity-100" />
         <span
           className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-0.5 opacity-0 transition-opacity group-hover:opacity-100"
           aria-hidden
@@ -80,7 +80,7 @@ export function ResizableLayout({
         </span>
       </button>
 
-      <div className="min-h-0 min-w-0 flex-1 overflow-hidden">{right}</div>
+      <div className="min-h-0 min-w-0 flex-1 overflow-hidden h-full">{right}</div>
     </div>
   )
 }

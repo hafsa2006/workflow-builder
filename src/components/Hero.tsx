@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Play, ScanText, Database, Zap } from 'lucide-react';
+import { ArrowRight, ScanText, Database, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Hero() {
